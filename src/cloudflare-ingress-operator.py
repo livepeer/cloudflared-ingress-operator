@@ -122,8 +122,8 @@ class CloudflaredIngressOperator:
                                f"{svc.metadata.namespace}/{svc.metadata.name}: {e}")
 
             ingress_rules.append(rule)
-            logger.info(f"Added ingress rule from Service {svc.metadata.namespace}/{svc.metadata.name}: "
-                       f"{hostname} -> {service_url}")
+            logger.debug(f"Found ingress rule from Service {svc.metadata.namespace}/{svc.metadata.name}: "
+                        f"{hostname} -> {service_url}")
 
         if WATCH_ALL_NAMESPACES:
             ingresses = self.networking_v1.list_ingress_for_all_namespaces(watch=False)
@@ -171,8 +171,8 @@ class CloudflaredIngressOperator:
                                     rule['path'] = path_spec.path
 
                                 ingress_rules.append(rule)
-                                logger.info(f"Added ingress rule from Ingress {ing.metadata.namespace}/{ing.metadata.name}: "
-                                          f"{hostname} -> {service_url}")
+                                logger.debug(f"Found ingress rule from Ingress {ing.metadata.namespace}/{ing.metadata.name}: "
+                                           f"{hostname} -> {service_url}")
 
         # Sort by hostname for consistent ordering
         ingress_rules.sort(key=lambda x: x.get('hostname', ''))
@@ -245,7 +245,7 @@ class CloudflaredIngressOperator:
                 _return_http_data_only=True
             )
 
-            logger.info(f"Successfully updated ConfigMap {NAMESPACE}/{CONFIGMAP_NAME} with {len(ingress_rules)} ingress rules")
+            logger.info(f"Reconciled ConfigMap {NAMESPACE}/{CONFIGMAP_NAME} with {len(ingress_rules)} ingress rules")
         except ApiException as e:
             logger.error(f"Failed to update ConfigMap {NAMESPACE}/{CONFIGMAP_NAME}: {e}")
 
@@ -254,10 +254,11 @@ class CloudflaredIngressOperator:
         """
         Reconcile: scan all resources and update ConfigMap.
         """
-        logger.info("Starting reconciliation...")
+        logger.debug("Starting reconciliation...")
         ingress_rules = self.get_ingress_rules_from_annotations()
+        logger.info(f"Found {len(ingress_rules)} ingress rules from annotated Services/Ingresses")
         self.update_configmap(ingress_rules)
-        logger.info("Reconciliation complete")
+        logger.debug("Reconciliation complete")
 
 
     def watch_resources(self):
