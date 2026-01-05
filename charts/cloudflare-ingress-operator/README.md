@@ -44,13 +44,13 @@ Edit `values.yaml` to configure:
 ```yaml
 # Cloudflared ConfigMap location
 cloudflared:
-  namespace: default              # Namespace where cloudflared is deployed
-  configMapName: cloudflared      # Name of the cloudflared ConfigMap
+  namespace: cloudflared            # Namespace where cloudflared is deployed
+  configMapName: cloudflared-config # Name of the cloudflared ConfigMap
 
 # Watch settings
 watch:
-  allNamespaces: true             # Watch all namespaces
-  namespaces: []                  # Or specific namespaces: [default, production]
+  allNamespaces: true # Watch all namespaces
+  namespaces: []      # Or specific namespaces: [default, production]
 
 # Operator image
 operator:
