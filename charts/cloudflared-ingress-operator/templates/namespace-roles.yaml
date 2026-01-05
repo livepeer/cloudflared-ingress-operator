@@ -1,7 +1,7 @@
 {{- if not .Values.watch.allNamespaces }}
-{{- $fullName := include "cloudflare-ingress-operator.fullname" . -}}
-{{- $labels := include "cloudflare-ingress-operator.labels" . -}}
-{{- $serviceAccountName := include "cloudflare-ingress-operator.serviceAccountName" . -}}
+{{- $fullName := include "cloudflared-ingress-operator.fullname" . -}}
+{{- $labels := include "cloudflared-ingress-operator.labels" . -}}
+{{- $serviceAccountName := include "cloudflared-ingress-operator.serviceAccountName" . -}}
 {{- $releaseNamespace := .Release.Namespace -}}
 {{- range .Values.watch.namespaces }}
 ---

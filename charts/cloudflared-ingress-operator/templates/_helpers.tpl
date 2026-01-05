@@ -1,14 +1,14 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "cloudflare-ingress-operator.name" -}}
+{{- define "cloudflared-ingress-operator.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Create a default fully qualified app name.
 */}}
-{{- define "cloudflare-ingress-operator.fullname" -}}
+{{- define "cloudflared-ingress-operator.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -24,16 +24,16 @@ Create a default fully qualified app name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "cloudflare-ingress-operator.chart" -}}
+{{- define "cloudflared-ingress-operator.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "cloudflare-ingress-operator.labels" -}}
-helm.sh/chart: {{ include "cloudflare-ingress-operator.chart" . }}
-{{ include "cloudflare-ingress-operator.selectorLabels" . }}
+{{- define "cloudflared-ingress-operator.labels" -}}
+helm.sh/chart: {{ include "cloudflared-ingress-operator.chart" . }}
+{{ include "cloudflared-ingress-operator.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -43,17 +43,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "cloudflare-ingress-operator.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "cloudflare-ingress-operator.name" . }}
+{{- define "cloudflared-ingress-operator.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "cloudflared-ingress-operator.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "cloudflare-ingress-operator.serviceAccountName" -}}
+{{- define "cloudflared-ingress-operator.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "cloudflare-ingress-operator.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "cloudflared-ingress-operator.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
