@@ -235,6 +235,14 @@ class CloudflaredIngressOperator:
         # Update ConfigMap using Server-Side Apply to claim ownership of the ingress field
         new_config_yaml = yaml.dump(config_data, default_flow_style=False, sort_keys=False)
 
+        # Add comment before ingress section to indicate it's managed by the operator
+        comment = (
+            "# NOTE: This ingress section is dynamically managed by cloudflared-ingress-operator.\n"
+            "# The operator watches for Services/Ingresses with cloudflared.io/* annotations\n"
+            "# and automatically updates these rules. Manual changes may be overwritten.\n"
+        )
+        new_config_yaml = new_config_yaml.replace('ingress:\n', f'{comment}ingress:\n')
+
         try:
             # For SSA, we need to send only the fields we want to manage
             # Create a minimal ConfigMap object without managedFields
