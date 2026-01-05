@@ -7,8 +7,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ ./src/
 
-RUN useradd -r -u 1000 operator && \
-    chown -R operator:operator /app
-USER operator
+RUN useradd -r -u 1000 cf-ingress-operator && \
+    chown -R cf-ingress-operator:cf-ingress-operator /app
+USER cf-ingress-operator
 
-CMD ["python", "-u", "src/operator.py"]
+CMD ["python", "-u", "src/cloudflare-ingress-operator.py"]
