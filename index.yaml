@@ -48,6 +48,40 @@ entries:
         - url: https://artifacthub.io/packages/helm/cloudflare/cloudflared
     apiVersion: v2
     appVersion: 0.1.0
+    created: "2026-01-05T21:09:09.466094261Z"
+    description: Kubernetes operator that watches for cloudflared.io/* annotations
+      and dynamically updates cloudflared ConfigMap ingress rules
+    digest: cd0a43b84ee43c3db423ee1da757f53f0b415d1f8f4380ce4c1fffdae98b9f46
+    home: https://github.com/livepeer/cloudflared-ingress-operator
+    keywords:
+    - cloudflared
+    - operator
+    - ingress
+    - tunnel
+    - cloudflare
+    maintainers:
+    - email: sre@livepeer.org
+      name: Livepeer
+      url: https://livepeer.org
+    name: cloudflared-ingress-operator
+    sources:
+    - https://github.com/livepeer/cloudflared-ingress-operator
+    type: application
+    urls:
+    - https://github.com/livepeer/cloudflared-ingress-operator/releases/download/cloudflared-ingress-operator-0.2.0/cloudflared-ingress-operator-0.2.0.tgz
+    version: 0.2.0
+  - annotations:
+      artifacthub.io/category: integration-delivery
+      artifacthub.io/license: MIT
+      artifacthub.io/links: |
+        - name: Source Code
+          url: https://github.com/livepeer/cloudflared-ingress-operator
+      artifacthub.io/operator: "true"
+      artifacthub.io/operatorCapabilities: Basic Install
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/helm/cloudflare/cloudflared
+    apiVersion: v2
+    appVersion: 0.1.0
     created: "2026-01-05T19:18:00.867100408Z"
     description: Kubernetes operator that watches for cloudflared.io/* annotations
       and dynamically updates cloudflared ConfigMap ingress rules
@@ -70,4 +104,4 @@ entries:
     urls:
     - https://github.com/livepeer/cloudflared-ingress-operator/releases/download/cloudflared-ingress-operator-0.1.0/cloudflared-ingress-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-05T19:18:00.86710643Z"
+generated: "2026-01-05T21:09:09.466102716Z"
