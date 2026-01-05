@@ -200,6 +200,34 @@ class CloudflaredIngressOperator:
             logger.error(f"Failed to parse config.yaml: {e}")
             return
 
+        # Get current ingress rules (excluding the 404 catch-all)
+        current_ingress = config_data.get('ingress', [])
+        current_rules = [r for r in current_ingress if r.get('service') != 'http_status:404']
+
+        # Create rule signature for comparison (hostname + path + service)
+        def rule_signature(rule):
+            return (rule.get('hostname', ''), rule.get('path', ''), rule.get('service', ''))
+
+        current_sigs = {rule_signature(r): r for r in current_rules}
+        new_sigs = {rule_signature(r): r for r in ingress_rules}
+
+        # Determine changes
+        added = [sig for sig in new_sigs if sig not in current_sigs]
+        removed = [sig for sig in current_sigs if sig not in new_sigs]
+        unchanged = [sig for sig in new_sigs if sig in current_sigs]
+
+        # Log changes
+        for sig in added:
+            rule = new_sigs[sig]
+            logger.info(f"+ Adding: {rule.get('hostname')} -> {rule.get('service')}")
+
+        for sig in removed:
+            rule = current_sigs[sig]
+            logger.info(f"- Removing: {rule.get('hostname')} -> {rule.get('service')}")
+
+        if not added and not removed and unchanged:
+            logger.debug(f"No changes - {len(unchanged)} rule(s) unchanged")
+
         # Update ingress rules, keeping the 404 catch-all at the end
         new_ingress = ingress_rules + [{'service': 'http_status:404'}]
         config_data['ingress'] = new_ingress
