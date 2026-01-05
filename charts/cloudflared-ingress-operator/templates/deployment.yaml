@@ -6,6 +6,7 @@ metadata:
     {{- include "cloudflared-ingress-operator.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.operator.replicaCount }}
+  revisionHistoryLimit: {{ .Values.operator.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "cloudflared-ingress-operator.selectorLabels" . | nindent 6 }}
