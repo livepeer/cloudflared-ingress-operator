@@ -208,16 +208,30 @@ class CloudflaredIngressOperator:
         cm.data['config.yaml'] = yaml.dump(config_data, default_flow_style=False, sort_keys=False)
 
         try:
-            # Use Server-Side Apply with field manager to claim ownership
-            # Must use the correct content-type header for SSA
-            self.v1.patch_namespaced_config_map(
-                name=CONFIGMAP_NAME,
-                namespace=NAMESPACE,
+            # Call the API with Server-Side Apply using the low-level API client
+            # The Python client doesn't have direct SSA support, so we use the ApiClient directly
+            header_params = {
+                'Accept': self.v1.api_client.select_header_accept(['application/json', 'application/yaml']),
+                'Content-Type': 'application/apply-patch+yaml'
+            }
+
+            query_params = [
+                ('fieldManager', 'cloudflared-ingress-operator'),
+                ('force', 'true')
+            ]
+
+            path = f'/api/v1/namespaces/{NAMESPACE}/configmaps/{CONFIGMAP_NAME}'
+
+            response = self.v1.api_client.call_api(
+                path, 'PATCH',
+                header_params=header_params,
+                query_params=query_params,
                 body=cm,
-                field_manager='cloudflared-ingress-operator',
-                force=True,
-                _content_type='application/apply-patch+yaml'
+                response_type='V1ConfigMap',
+                auth_settings=['BearerToken'],
+                _return_http_data_only=True
             )
+
             logger.info(f"Successfully updated ConfigMap {NAMESPACE}/{CONFIGMAP_NAME} with {len(ingress_rules)} ingress rules")
         except ApiException as e:
             logger.error(f"Failed to update ConfigMap {NAMESPACE}/{CONFIGMAP_NAME}: {e}")
