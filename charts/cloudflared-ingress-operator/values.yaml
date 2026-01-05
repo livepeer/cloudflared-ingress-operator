@@ -1,9 +1,15 @@
-# Cloudflared operator configuration
+cloudflared:
+  # Namespace where cloudflared is deployed
+  namespace: cloudflared
+
+  # Name of the cloudflared ConfigMap to update
+  configMapName: cloudflared-config
+
+
 operator:
-  # Container image
   image:
     repository: livepeer/cloudflare-ingress-operator
-    tag: "0.1.0"
+    tag: latest
     pullPolicy: IfNotPresent
 
   # Resources
@@ -15,27 +21,15 @@ operator:
       cpu: 100m
       memory: 128Mi
 
-  # Replica count
+  # How many historical deployments to retain, useful for debugging
+  revisionHistoryLimit: 2
   replicaCount: 1
 
-  # Node selector
+  affinity: {}
   nodeSelector: {}
-
-  # Tolerations
   tolerations: []
 
-  # Affinity
-  affinity: {}
 
-# Cloudflared ConfigMap settings
-cloudflared:
-  # Namespace where cloudflared is deployed
-  namespace: cloudflared
-
-  # Name of the cloudflared ConfigMap to update
-  configMapName: cloudflared-config
-
-# Watching settings
 watch:
   # Watch all namespaces (requires cluster-wide permissions)
   allNamespaces: true
