@@ -251,17 +251,15 @@ class CloudflaredIngressOperator:
             }
 
             # Call the API with Server-Side Apply using the low-level API client
+            path = f'/api/v1/namespaces/{NAMESPACE}/configmaps/{CONFIGMAP_NAME}'
             header_params = {
                 'Accept': self.v1.api_client.select_header_accept(['application/json', 'application/yaml']),
                 'Content-Type': 'application/apply-patch+yaml'
             }
-
             query_params = [
                 ('fieldManager', 'cloudflared-ingress-operator'),
                 ('force', 'true')
             ]
-
-            path = f'/api/v1/namespaces/{NAMESPACE}/configmaps/{CONFIGMAP_NAME}'
 
             response = self.v1.api_client.call_api(
                 path, 'PATCH',

@@ -1,8 +1,8 @@
 apiVersion: v2
 name: cloudflared-ingress-operator
-description: Kubernetes operator that watches for cloudflared.io/* annotations and dynamically updates cloudflared ConfigMap ingress rules
+description: Kubernetes operator that watches for cloudflared.io/* annotations and dynamically updates cloudflared ingress rules stored in a ConfigMap
 type: application
-version: 0.2.0
+version: 0.3.0
 appVersion: "0.1.0"
 keywords:
   - cloudflared
