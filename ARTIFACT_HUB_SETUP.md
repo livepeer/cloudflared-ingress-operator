@@ -1,6 +1,6 @@
 # Artifact Hub Setup Guide
 
-This guide explains how to publish the Cloudflare Ingress Operator Helm chart to Artifact Hub.
+This guide explains how to publish the Cloudflared Ingress Operator Helm chart to Artifact Hub.
 
 ## Prerequisites
 
@@ -25,9 +25,9 @@ The chart-releaser GitHub Action will automatically create and update the `gh-pa
 1. Log in to Artifact Hub: https://artifacthub.io/
 2. Go to Control Panel → Add Repository
 3. Fill in the details:
-   - **Name**: cloudflare-ingress-operator
-   - **Display Name**: Cloudflare Ingress Operator
-   - **URL**: https://livepeer.github.io/cloudflare-ingress-operator
+   - **Name**: cloudflared-ingress-operator
+   - **Display Name**: Cloudflared Ingress Operator
+   - **URL**: https://livepeer.github.io/cloudflared-ingress-operator
    - **Kind**: Helm charts
    - **Organization**: livepeer-org
    - **Repository metadata file**: artifacthub-repo.yaml
@@ -53,7 +53,7 @@ To trigger the first chart release:
 
 ```bash
 # Make a change to the chart
-cd charts/cloudflare-ingress-operator
+cd charts/cloudflared-ingress-operator
 # Bump version in Chart.yaml or make a change
 
 # Commit and push
@@ -74,11 +74,11 @@ The GitHub Action will:
 2. Verify `gh-pages` branch was created/updated
 3. Check GitHub Releases for chart package
 4. Wait ~5-10 minutes for Artifact Hub to sync
-5. Visit: https://artifacthub.io/packages/helm/livepeer-org/cloudflare-ingress-operator
+5. Visit: https://artifacthub.io/packages/helm/livepeer-org/cloudflared-ingress-operator
 
 ## Chart Versioning
 
-Update the version in `charts/cloudflare-ingress-operator/Chart.yaml`:
+Update the version in `charts/cloudflared-ingress-operator/Chart.yaml`:
 
 ```yaml
 version: 0.1.0  # Increment this for each release
@@ -95,16 +95,16 @@ Before pushing, test the chart:
 
 ```bash
 # Lint
-helm lint charts/cloudflare-ingress-operator
+helm lint charts/cloudflared-ingress-operator
 
 # Template
-helm template cloudflare-ingress-operator charts/cloudflare-ingress-operator
+helm template cloudflared-ingress-operator charts/cloudflared-ingress-operator
 
 # Package
-helm package charts/cloudflare-ingress-operator
+helm package charts/cloudflared-ingress-operator
 
 # Test install
-helm install test-release charts/cloudflare-ingress-operator --dry-run --debug
+helm install test-release charts/cloudflared-ingress-operator --dry-run --debug
 ```
 
 ## Troubleshooting
@@ -112,7 +112,7 @@ helm install test-release charts/cloudflare-ingress-operator --dry-run --debug
 ### Chart not appearing on Artifact Hub
 
 1. Check GitHub Pages is enabled and `gh-pages` branch exists
-2. Visit https://livepeer.github.io/cloudflare-ingress-operator/index.yaml to verify chart index
+2. Visit https://livepeer.github.io/cloudflared-ingress-operator/index.yaml to verify chart index
 3. Check Artifact Hub repository settings
 4. Wait 5-10 minutes for sync
 5. Check repository metadata file is at root: `artifacthub-repo.yaml`

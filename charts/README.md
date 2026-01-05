@@ -1,20 +1,20 @@
-# Cloudflare Ingress Operator Helm Charts
+# Cloudflared Ingress Operator Helm Charts
 
-This directory contains the official Helm chart for the Cloudflare Ingress Operator.
+This directory contains the official Helm chart for the Cloudflared Ingress Operator.
 
 ## Installation
 
 ### Add the Helm repository
 
 ```bash
-helm repo add cloudflare-ingress-operator https://livepeer.github.io/cloudflare-ingress-operator
+helm repo add cloudflared-ingress-operator https://livepeer.github.io/cloudflared-ingress-operator
 helm repo update
 ```
 
 ### Install the chart
 
 ```bash
-helm install cloudflare-ingress-operator cloudflare-ingress-operator/cloudflare-ingress-operator \
+helm install cloudflared-ingress-operator cloudflared-ingress-operator/cloudflared-ingress-operator \
   --set cloudflared.namespace=default \
   --set cloudflared.configMapName=cloudflared
 ```
@@ -23,7 +23,7 @@ helm install cloudflare-ingress-operator cloudflare-ingress-operator/cloudflare-
 
 The charts are hosted on GitHub Pages and automatically published via GitHub Actions when changes are pushed to the `main` branch.
 
-- **Repository URL**: https://livepeer.github.io/cloudflare-ingress-operator
+- **Repository URL**: https://livepeer.github.io/cloudflared-ingress-operator
 - **Artifact Hub**: https://artifacthub.io/packages/search?org=livepeer-org
 
 ## Development
@@ -32,13 +32,13 @@ To test the chart locally:
 
 ```bash
 # Lint the chart
-helm lint charts/cloudflare-ingress-operator
+helm lint charts/cloudflared-ingress-operator
 
 # Template the chart
-helm template cloudflare-ingress-operator charts/cloudflare-ingress-operator
+helm template cloudflared-ingress-operator charts/cloudflared-ingress-operator
 
 # Install locally
-helm install cloudflare-ingress-operator charts/cloudflare-ingress-operator \
+helm install cloudflared-ingress-operator charts/cloudflared-ingress-operator \
   --set cloudflared.namespace=default
 ```
 

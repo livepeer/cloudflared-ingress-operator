@@ -1,5 +1,5 @@
 apiVersion: v2
-name: cloudflare-ingress-operator
+name: cloudflared-ingress-operator
 description: Kubernetes operator that watches for cloudflared.io/* annotations and dynamically updates cloudflared ConfigMap ingress rules
 type: application
 version: 0.1.0
@@ -10,9 +10,9 @@ keywords:
   - ingress
   - tunnel
   - cloudflare
-home: https://github.com/livepeer/cloudflare-ingress-operator
+home: https://github.com/livepeer/cloudflared-ingress-operator
 sources:
-  - https://github.com/livepeer/cloudflare-ingress-operator
+  - https://github.com/livepeer/cloudflared-ingress-operator
 maintainers:
   - name: Livepeer
     email: sre@livepeer.org
@@ -22,7 +22,7 @@ annotations:
   artifacthub.io/license: MIT
   artifacthub.io/links: |
     - name: Source Code
-      url: https://github.com/livepeer/cloudflare-ingress-operator
+      url: https://github.com/livepeer/cloudflared-ingress-operator
   artifacthub.io/operator: "true"
   artifacthub.io/operatorCapabilities: Basic Install
   artifacthub.io/recommendations: |

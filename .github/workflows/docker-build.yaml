@@ -12,7 +12,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: livepeer/cloudflare-ingress-operator
+  IMAGE_NAME: livepeer/cloudflared-ingress-operator
 
 jobs:
   build:
