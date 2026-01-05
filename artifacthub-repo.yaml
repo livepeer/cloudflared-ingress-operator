@@ -1,6 +1,5 @@
-# Artifact Hub repository metadata file
 # https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml
-repositoryID: <REPOSITORY_ID>
+repositoryID: fe14cd5a-ef35-4a76-b902-c339745f7a89
 owners:
   - name: livepeer-org
-    email: sre@livepeer.org
+    email: infraservice@livepeer.org
