@@ -204,11 +204,18 @@ class CloudflaredIngressOperator:
         new_ingress = ingress_rules + [{'service': 'http_status:404'}]
         config_data['ingress'] = new_ingress
 
-        # Update ConfigMap
+        # Update ConfigMap using Server-Side Apply to claim ownership of the ingress field
         cm.data['config.yaml'] = yaml.dump(config_data, default_flow_style=False, sort_keys=False)
 
         try:
-            self.v1.patch_namespaced_config_map(name=CONFIGMAP_NAME, namespace=NAMESPACE, body=cm)
+            # Use Server-Side Apply with field manager to claim ownership
+            self.v1.patch_namespaced_config_map(
+                name=CONFIGMAP_NAME,
+                namespace=NAMESPACE,
+                body=cm,
+                field_manager='cloudflared-ingress-operator',
+                force=True
+            )
             logger.info(f"Successfully updated ConfigMap {NAMESPACE}/{CONFIGMAP_NAME} with {len(ingress_rules)} ingress rules")
         except ApiException as e:
             logger.error(f"Failed to update ConfigMap {NAMESPACE}/{CONFIGMAP_NAME}: {e}")
