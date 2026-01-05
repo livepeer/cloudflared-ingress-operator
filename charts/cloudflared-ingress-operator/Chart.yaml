@@ -15,7 +15,7 @@ sources:
   - https://github.com/livepeer/cloudflared-ingress-operator
 maintainers:
   - name: Livepeer
-    email: sre@livepeer.org
+    email: infraservices@livepeer.org
     url: https://livepeer.org
 annotations:
   artifacthub.io/category: integration-delivery
