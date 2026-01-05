@@ -31,8 +31,8 @@ Perfect for use with ArgoCD and GitOps workflows!
 ```bash
 # Install the helm chart
 helm install cloudflare-ingress-operator . \
-  --set cloudflared.namespace=default \
-  --set cloudflared.configMapName=cloudflared
+  --set cloudflared.namespace=cloudflared \
+  --set cloudflared.configMapName=cloudflared-config
 ```
 
 The operator image is automatically built and published to Docker Hub via GitHub Actions. See the [operator repository](https://github.com/livepeer/cloudflare-ingress-operator) for source code and build details.

@@ -15,8 +15,8 @@ helm repo update
 
 ```bash
 helm install cloudflared-ingress-operator cloudflared-ingress-operator/cloudflared-ingress-operator \
-  --set cloudflared.namespace=default \
-  --set cloudflared.configMapName=cloudflared
+  --set cloudflared.namespace=cloudflared \
+  --set cloudflared.configMapName=cloudflared-config
 ```
 
 ## Chart Repository
@@ -39,7 +39,7 @@ helm template cloudflared-ingress-operator charts/cloudflared-ingress-operator
 
 # Install locally
 helm install cloudflared-ingress-operator charts/cloudflared-ingress-operator \
-  --set cloudflared.namespace=default
+  --set cloudflared.namespace=cloudflared
 ```
 
 ## Versioning
