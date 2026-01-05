@@ -205,11 +205,24 @@ class CloudflaredIngressOperator:
         config_data['ingress'] = new_ingress
 
         # Update ConfigMap using Server-Side Apply to claim ownership of the ingress field
-        cm.data['config.yaml'] = yaml.dump(config_data, default_flow_style=False, sort_keys=False)
+        new_config_yaml = yaml.dump(config_data, default_flow_style=False, sort_keys=False)
 
         try:
+            # For SSA, we need to send only the fields we want to manage
+            # Create a minimal ConfigMap object without managedFields
+            apply_body = {
+                'apiVersion': 'v1',
+                'kind': 'ConfigMap',
+                'metadata': {
+                    'name': CONFIGMAP_NAME,
+                    'namespace': NAMESPACE
+                },
+                'data': {
+                    'config.yaml': new_config_yaml
+                }
+            }
+
             # Call the API with Server-Side Apply using the low-level API client
-            # The Python client doesn't have direct SSA support, so we use the ApiClient directly
             header_params = {
                 'Accept': self.v1.api_client.select_header_accept(['application/json', 'application/yaml']),
                 'Content-Type': 'application/apply-patch+yaml'
@@ -226,7 +239,7 @@ class CloudflaredIngressOperator:
                 path, 'PATCH',
                 header_params=header_params,
                 query_params=query_params,
-                body=cm,
+                body=apply_body,
                 response_type='V1ConfigMap',
                 auth_settings=['BearerToken'],
                 _return_http_data_only=True
