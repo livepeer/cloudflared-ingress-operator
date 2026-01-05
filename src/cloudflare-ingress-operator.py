@@ -209,12 +209,14 @@ class CloudflaredIngressOperator:
 
         try:
             # Use Server-Side Apply with field manager to claim ownership
+            # Must use the correct content-type header for SSA
             self.v1.patch_namespaced_config_map(
                 name=CONFIGMAP_NAME,
                 namespace=NAMESPACE,
                 body=cm,
                 field_manager='cloudflared-ingress-operator',
-                force=True
+                force=True,
+                _content_type='application/apply-patch+yaml'
             )
             logger.info(f"Successfully updated ConfigMap {NAMESPACE}/{CONFIGMAP_NAME} with {len(ingress_rules)} ingress rules")
         except ApiException as e:
