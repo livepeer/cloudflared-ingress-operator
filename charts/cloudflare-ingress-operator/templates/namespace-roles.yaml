@@ -1,0 +1,40 @@
+{{- if not .Values.watch.allNamespaces }}
+{{- $fullName := include "cloudflare-ingress-operator.fullname" . -}}
+{{- $labels := include "cloudflare-ingress-operator.labels" . -}}
+{{- $serviceAccountName := include "cloudflare-ingress-operator.serviceAccountName" . -}}
+{{- $releaseNamespace := .Release.Namespace -}}
+{{- range .Values.watch.namespaces }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $fullName }}-watch
+  namespace: {{ . }}
+  labels:
+    {{- $labels | nindent 4 }}
+rules:
+  # Permission to watch Services and Ingresses in this namespace
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $fullName }}-watch
+  namespace: {{ . }}
+  labels:
+    {{- $labels | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $fullName }}-watch
+subjects:
+  - kind: ServiceAccount
+    name: {{ $serviceAccountName }}
+    namespace: {{ $releaseNamespace }}
+{{- end }}
+{{- end }}

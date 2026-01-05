@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cloudflare-ingress-operator.fullname" . }}
+  labels:
+    {{- include "cloudflare-ingress-operator.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.operator.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "cloudflare-ingress-operator.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "cloudflare-ingress-operator.selectorLabels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      serviceAccountName: {{ include "cloudflare-ingress-operator.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+      - name: operator
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        image: "{{ .Values.operator.image.repository }}:{{ .Values.operator.image.tag }}"
+        imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
+        env:
+        - name: CLOUDFLARED_NAMESPACE
+          value: {{ .Values.cloudflared.namespace | quote }}
+        - name: CONFIGMAP_NAME
+          value: {{ .Values.cloudflared.configMapName | quote }}
+        - name: WATCH_ALL_NAMESPACES
+          value: {{ .Values.watch.allNamespaces | quote }}
+        {{- if not .Values.watch.allNamespaces }}
+        - name: WATCH_NAMESPACES
+          value: {{ .Values.watch.namespaces | join "," | quote }}
+        {{- end }}
+        resources:
+          {{- toYaml .Values.operator.resources | nindent 12 }}
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      {{- with .Values.operator.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.operator.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.operator.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

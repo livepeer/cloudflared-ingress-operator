@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "cloudflare-ingress-operator.fullname" . }}-configmap
+  namespace: {{ .Values.cloudflared.namespace }}
+  labels:
+    {{- include "cloudflare-ingress-operator.labels" . | nindent 4 }}
+rules:
+  # Permission to read and update the cloudflared ConfigMap
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    resourceNames: [{{ .Values.cloudflared.configMapName | quote }}]
+    verbs: ["get", "list", "watch", "update", "patch"]

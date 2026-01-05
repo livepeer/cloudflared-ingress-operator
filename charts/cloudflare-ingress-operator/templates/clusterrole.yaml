@@ -1,0 +1,16 @@
+{{- if .Values.watch.allNamespaces }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "cloudflare-ingress-operator.fullname" . }}-watch
+  labels:
+    {{- include "cloudflare-ingress-operator.labels" . | nindent 4 }}
+rules:
+  # Permission to watch Services and Ingresses across all namespaces
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "watch"]
+{{- end }}

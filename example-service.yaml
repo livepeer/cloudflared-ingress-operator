@@ -1,0 +1,83 @@
+# Example: Simple web service exposed via cloudflared
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-web-app
+  namespace: default
+  annotations:
+    # The hostname to route traffic to this service (required)
+    # The operator will automatically detect this annotation and enable routing
+    cloudflared.io/hostname: "myapp.example.com"
+
+    # Optional: Override the auto-generated service URL
+    # If omitted, will use: http://my-web-app.default.svc.cluster.local:80
+    # cloudflared.io/service: "http://my-web-app:8080"
+
+    # Optional: Path-based routing
+    # cloudflared.io/path: "/api/*"
+
+    # Optional: Origin request configuration (YAML string)
+    # cloudflared.io/origin-request: |
+    #   connectTimeout: 30s
+    #   noTLSVerify: false
+    #   httpHostHeader: "myapp.internal"
+
+spec:
+  selector:
+    app: my-web-app
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+
+---
+# Example: Using with Ingress resource
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-app-ingress
+  namespace: default
+  annotations:
+    cloudflared.io/hostname: "app2.example.com"
+spec:
+  rules:
+  - host: app2.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: my-web-app
+            port:
+              number: 80
+
+---
+# Example: Multiple hostnames for the same service
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+  namespace: production
+  annotations:
+    cloudflared.io/hostname: "api.example.com"
+spec:
+  selector:
+    app: api
+  ports:
+  - port: 8080
+
+---
+# Create a second service (or ingress) for the alternate hostname
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service-alt
+  namespace: production
+  annotations:
+    cloudflared.io/hostname: "api-v2.example.com"
+    cloudflared.io/service: "http://api-service.production.svc.cluster.local:8080"
+spec:
+  # This service doesn't need real endpoints, just the annotation
+  type: ExternalName
+  externalName: api-service.production.svc.cluster.local

@@ -1,0 +1,73 @@
+# Cloudflared operator configuration
+operator:
+  # Container image
+  image:
+    repository: livepeer/cloudflare-ingress-operator
+    tag: "0.1.0"
+    pullPolicy: IfNotPresent
+
+  # Resources
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+
+  # Replica count
+  replicaCount: 1
+
+  # Node selector
+  nodeSelector: {}
+
+  # Tolerations
+  tolerations: []
+
+  # Affinity
+  affinity: {}
+
+# Cloudflared ConfigMap settings
+cloudflared:
+  # Namespace where cloudflared is deployed
+  namespace: default
+
+  # Name of the cloudflared ConfigMap to update
+  configMapName: cloudflared
+
+# Watching settings
+watch:
+  # Watch all namespaces (requires cluster-wide permissions)
+  allNamespaces: true
+
+  # Specific namespaces to watch (only if allNamespaces is false)
+  # namespaces:
+  #   - default
+  #   - production
+  namespaces: []
+
+# Service account
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+# Pod annotations
+podAnnotations: {}
+
+# Pod labels
+podLabels: {}
+
+# Security context for the pod
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+# Security context for containers
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
