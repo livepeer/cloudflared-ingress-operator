@@ -48,6 +48,40 @@ entries:
         - url: https://artifacthub.io/packages/helm/cloudflare/cloudflared
     apiVersion: v2
     appVersion: 0.1.0
+    created: "2026-01-20T21:08:11.314693196Z"
+    description: Kubernetes operator that watches for cloudflared.io/* annotations
+      and dynamically updates cloudflared ingress rules stored in a ConfigMap
+    digest: 930d7b9a0f373b83034508687d18a5b2232b9a73064a0c031ec7b9cfebd91b43
+    home: https://github.com/livepeer/cloudflared-ingress-operator
+    keywords:
+    - cloudflared
+    - operator
+    - ingress
+    - tunnel
+    - cloudflare
+    maintainers:
+    - email: infraservices@livepeer.org
+      name: Livepeer
+      url: https://livepeer.org
+    name: cloudflared-ingress-operator
+    sources:
+    - https://github.com/livepeer/cloudflared-ingress-operator
+    type: application
+    urls:
+    - https://github.com/livepeer/cloudflared-ingress-operator/releases/download/cloudflared-ingress-operator-0.3.1/cloudflared-ingress-operator-0.3.1.tgz
+    version: 0.3.1
+  - annotations:
+      artifacthub.io/category: integration-delivery
+      artifacthub.io/license: MIT
+      artifacthub.io/links: |
+        - name: Source Code
+          url: https://github.com/livepeer/cloudflared-ingress-operator
+      artifacthub.io/operator: "true"
+      artifacthub.io/operatorCapabilities: Basic Install
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/helm/cloudflare/cloudflared
+    apiVersion: v2
+    appVersion: 0.1.0
     created: "2026-01-05T22:23:11.137250491Z"
     description: Kubernetes operator that watches for cloudflared.io/* annotations
       and dynamically updates cloudflared ingress rules stored in a ConfigMap
@@ -138,4 +172,4 @@ entries:
     urls:
     - https://github.com/livepeer/cloudflared-ingress-operator/releases/download/cloudflared-ingress-operator-0.1.0/cloudflared-ingress-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-05T22:23:11.137264948Z"
+generated: "2026-01-20T21:08:11.31471711Z"
