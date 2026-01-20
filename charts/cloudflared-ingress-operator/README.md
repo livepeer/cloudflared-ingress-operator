@@ -2,7 +2,7 @@
 
 Helm chart for deploying the Cloudflare Ingress Operator - a Kubernetes operator that watches for `cloudflared.io/*` annotations on Services and Ingresses, and dynamically updates the cloudflared ConfigMap's ingress rules.
 
-> **Note**: This is the Helm chart repository. For the operator source code, see [cloudflare-ingress-operator](https://github.com/livepeer/cloudflare-ingress-operator).
+> **Note**: This is the Helm chart repository. For the operator source code, see [cloudflared-ingress-operator](https://github.com/livepeer/cloudflared-ingress-operator).
 
 ## Overview
 
@@ -30,12 +30,12 @@ Perfect for use with ArgoCD and GitOps workflows!
 
 ```bash
 # Install the helm chart
-helm install cloudflare-ingress-operator . \
+helm install cloudflared-ingress-operator . \
   --set cloudflared.namespace=cloudflared \
   --set cloudflared.configMapName=cloudflared-config
 ```
 
-The operator image is automatically built and published to Docker Hub via GitHub Actions. See the [operator repository](https://github.com/livepeer/cloudflare-ingress-operator) for source code and build details.
+The operator image is automatically built and published to Docker Hub via GitHub Actions. See the [operator repository](https://github.com/livepeer/cloudflared-ingress-operator) for source code and build details.
 
 ### Configuration
 
@@ -55,7 +55,7 @@ watch:
 # Operator image
 operator:
   image:
-    repository: livepeer/cloudflare-ingress-operator
+    repository: livepeer/cloudflared-ingress-operator
     tag: "0.1.0"
 ```
 
@@ -215,17 +215,17 @@ The operator requires the following permissions:
 ### Check operator logs
 
 ```bash
-kubectl logs -l app.kubernetes.io/name=cloudflare-ingress-operator -f
+kubectl logs -l app.kubernetes.io/name=cloudflared-ingress-operator -f
 ```
 
 ### Verify RBAC permissions
 
 ```bash
 # Check if operator can read services
-kubectl auth can-i list services --as=system:serviceaccount:default:cloudflare-ingress-operator -n production
+kubectl auth can-i list services --as=system:serviceaccount:default:cloudflared-ingress-operator -n production
 
 # Check if operator can update ConfigMap
-kubectl auth can-i update configmap/cloudflared --as=system:serviceaccount:default:cloudflare-ingress-operator -n default
+kubectl auth can-i update configmap/cloudflared --as=system:serviceaccount:default:cloudflared-ingress-operator -n default
 ```
 
 ### View current ingress rules
@@ -236,7 +236,7 @@ kubectl get configmap cloudflared -n default -o yaml
 
 ## Development
 
-See the [cloudflare-ingress-operator](https://github.com/livepeer/cloudflare-ingress-operator) repository for:
+See the [cloudflared-ingress-operator](https://github.com/livepeer/cloudflared-ingress-operator) repository for:
 - Operator source code
 - Building and testing the operator
 - Contributing guidelines

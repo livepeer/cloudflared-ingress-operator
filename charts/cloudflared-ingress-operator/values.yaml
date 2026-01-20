@@ -8,7 +8,7 @@ cloudflared:
 
 operator:
   image:
-    repository: livepeer/cloudflare-ingress-operator
+    repository: livepeer/cloudflared-ingress-operator
     tag: latest
     pullPolicy: IfNotPresent
 

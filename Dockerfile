@@ -11,4 +11,4 @@ RUN useradd -r -u 1000 cf-ingress-operator && \
     chown -R cf-ingress-operator:cf-ingress-operator /app
 USER cf-ingress-operator
 
-CMD ["python", "-u", "src/cloudflare-ingress-operator.py"]
+CMD ["python", "-u", "src/cloudflared-ingress-operator.py"]

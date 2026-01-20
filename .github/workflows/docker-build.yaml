@@ -12,8 +12,6 @@ on:
   workflow_dispatch:
 
 env:
-  # REGISTRY: docker.io
-  # IMAGE_NAME: livepeer/cloudflared-ingress-operator
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
