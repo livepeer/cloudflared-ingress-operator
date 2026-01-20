@@ -3,3 +3,5 @@ repositoryID: fe14cd5a-ef35-4a76-b902-c339745f7a89
 owners:
   - name: livepeer-org
     email: infraservice@livepeer.org
+ignore:
+  - name: cloudflare-ingress-operator
